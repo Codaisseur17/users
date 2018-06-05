@@ -1,5 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm'
-import { IsString, IsEmail } from 'class-validator';
+import { IsString, IsEmail, MinLength } from 'class-validator'
+import { Exclude } from 'class-transformer'
+import * as bcrypt from 'bcrypt'
 
 @Entity()
 export default class User extends BaseEntity {
@@ -16,14 +18,25 @@ export default class User extends BaseEntity {
     lastName: string
     
     @IsEmail()
-    @Column("text", {default: null})
+    @Column("text", {nullable: false})
     email: string
 
     @IsString()
-    @Column("text", {default: null})
+    @MinLength(9)
+    @Column("text", {nullable: false})
+    @Exclude()
     password: string
 
-    @Column("boolean", {nullable: false})
+    async hashPassword(rawPassword: string) {
+        const hash = await bcrypt.hash(rawPassword, 10)
+        this.password = hash
+    }
+    
+    validatePassword(rawPassword: string): Promise<boolean> {
+        return bcrypt.compare(rawPassword, this.password)
+    }
+
+    @Column("boolean", {nullable: false, default: true})
     isTeacher: boolean
 
 }
