@@ -7,9 +7,9 @@ export default class UsersController {
     @Get('/users')
     async getAllUsers()
     {
-        const allUsers = await User.find()
-        if (!allUsers) throw new NotFoundError('Cannot find users table')
-        return {allUsers}
+        const oneUser = await User.find()
+        if (!oneUser) throw new NotFoundError('Cannot find users table')
+        return { oneUser }
     }
 
     @Get('/users/:id')

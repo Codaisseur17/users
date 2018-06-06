@@ -23,7 +23,7 @@ export default class User extends BaseEntity {
 
     @IsString()
     @Column("text", {nullable: false})
-    @Exclude()
+    @Exclude({ toPlainOnly: true })
     password: string
 
     async hashPassword(rawPassword: string) {
