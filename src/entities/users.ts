@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm'
-import { IsString, IsEmail, MinLength } from 'class-validator'
+import { IsString, IsEmail } from 'class-validator'
 import { Exclude } from 'class-transformer'
 import * as bcrypt from 'bcrypt'
 
@@ -22,7 +22,6 @@ export default class User extends BaseEntity {
     email: string
 
     @IsString()
-    @MinLength(9)
     @Column("text", {nullable: false})
     @Exclude()
     password: string
