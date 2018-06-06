@@ -2,7 +2,6 @@ import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany } from 't
 import { IsString, IsEmail } from 'class-validator'
 import { Exclude } from 'class-transformer'
 import * as bcrypt from 'bcrypt'
-import Quiz from '../../../quizzes/src/quizzes/entity'
 
 @Entity()
 export default class User extends BaseEntity {
@@ -38,8 +37,5 @@ export default class User extends BaseEntity {
 
     @Column("boolean", {nullable: false, default: true})
     isTeacher: boolean
-
-    @OneToMany(_ => Quiz, quiz => quiz.user)
-    quiz: Quiz
 
 }
