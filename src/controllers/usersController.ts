@@ -31,8 +31,8 @@ export default class UsersController {
         await userEntity.hashPassword(password)
         allUsers.map((user) => {
             if (user.email === userEntity.email) throw new BadRequestError('There is already a user account with this email! Please head to the login page.')
+            return userEntity.save()
         })
-        return userEntity.save()
     }
 
 }
